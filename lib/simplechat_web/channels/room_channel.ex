@@ -4,6 +4,7 @@ defmodule SimplechatWeb.RoomChannel do
   @impl true
   def join("room:lobby", payload, socket) do
     if authorized?(payload) do
+      send(self(), :after_join)
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -25,6 +26,16 @@ defmodule SimplechatWeb.RoomChannel do
     |> Simplechat.Repo.insert()
 
     broadcast(socket, "shout", payload)
+    {:noreply, socket}
+  end
+
+  # Send existing messages to the client when they join
+  @impl true
+  def handle_info(:after_join, socket) do
+    Simplechat.Message.get_messages()
+    |> Enum.reverse()
+    |> Enum.each(fn message -> push(socket, "shout", message) end)
+
     {:noreply, socket}
   end
 
