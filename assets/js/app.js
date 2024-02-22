@@ -92,14 +92,26 @@ send.addEventListener("click", () => {
   }
 });
 
-// Format date as "YYYY/MM/DD"
+// Date formatting
 function formatDate(datetime) {
-  const date = new Date(datetime);
-  return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+  const m = new Date(datetime);
+  return (
+    m.getUTCFullYear() +
+    "/" +
+    ("0" + (m.getUTCMonth() + 1)).slice(-2) +
+    "/" +
+    ("0" + m.getUTCDate()).slice(-2)
+  );
 }
 
-// Format time as "HH:MM:SS"
+// Time formatting
 function formatTime(datetime) {
-  const date = new Date(datetime);
-  return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  const m = new Date(datetime);
+  return (
+    ("0" + m.getUTCHours()).slice(-2) +
+    ":" +
+    ("0" + m.getUTCMinutes()).slice(-2) +
+    ":" +
+    ("0" + m.getUTCSeconds()).slice(-2)
+  );
 }
