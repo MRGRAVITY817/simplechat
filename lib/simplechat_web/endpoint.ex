@@ -16,7 +16,7 @@ defmodule SimplechatWeb.Endpoint do
       connect_info: [session: @session_options]
     ]
 
-  socket "/socket", ChatWeb.UserSocket,
+  socket "/socket", SimplechatWeb.UserSocket,
     websocket: true,
     longpoll: false
 
