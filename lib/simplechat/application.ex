@@ -8,16 +8,11 @@ defmodule Simplechat.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Telemetry supervisor
       SimplechatWeb.Telemetry,
-      # Start the Ecto repository
       Simplechat.Repo,
-      # Start the PubSub system
       {Phoenix.PubSub, name: Simplechat.PubSub},
-      # Start the Endpoint (http/https)
+      SimplechatWeb.Presence,
       SimplechatWeb.Endpoint
-      # Start a worker by calling: Simplechat.Worker.start_link(arg)
-      # {Simplechat.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
