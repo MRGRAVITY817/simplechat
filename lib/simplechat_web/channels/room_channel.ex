@@ -34,7 +34,13 @@ defmodule SimplechatWeb.RoomChannel do
   def handle_info(:after_join, socket) do
     Simplechat.Message.get_messages()
     |> Enum.reverse()
-    |> Enum.each(fn message -> push(socket, "shout", message) end)
+    |> Enum.each(fn message ->
+      push(socket, "shout", %{
+        name: message.name,
+        message: message.message,
+        inserted_at: message.inserted_at
+      })
+    end)
 
     {:noreply, socket}
   end
