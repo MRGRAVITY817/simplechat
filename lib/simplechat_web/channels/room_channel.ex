@@ -21,6 +21,9 @@ defmodule SimplechatWeb.RoomChannel do
   # broadcast to everyone in the current topic (room:lobby).
   @impl true
   def handle_in("shout", payload, socket) do
+    Simplechat.Message.changeset(%Simplechat.Message{}, payload)
+    |> Simplechat.Repo.insert()
+
     broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
